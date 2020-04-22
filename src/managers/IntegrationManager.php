@@ -27,17 +27,17 @@ class IntegrationManager extends Response
     /**
      * Возвращает ссылку бесшовного перехода
      * @param int $userId
-     * @param null $publicationId
+     * @param null $redirectUrl
      * @return mixed
      */
-    public function generateLoginOnceUrl($userId, $publicationId = null)
+    public function generateLoginOnceUrl($userId, $redirectUrl = null)
     {
         $apiMethod = '/login-once-token/{id}';
         $apiMethod = str_replace('{id}', $userId, $apiMethod);
-        $params = array('publication_id' => $publicationId);
+        $params = array('url' => $redirectUrl);
 
         $this->setResponse($this->getClient()->makeRequest($apiMethod, $params));
-        return $this->data['link'];
+        return $this->response['data']['link'];
     }
 
     /**
@@ -45,19 +45,21 @@ class IntegrationManager extends Response
      * @param $email
      * @param $name
      * @param $role
+     * @param null $redirectUrl
      * @return mixed
      */
-    public function generateLoginOrRegisterUrl($email, $name, $role)
+    public function generateLoginOrRegisterUrl($email, $name, $role, $redirectUrl = null)
     {
         $apiMethod = '/login-or-register-token';
         $params = array(
             'email' => $email,
             'name' => $name,
-            'role' => $role
+            'role' => $role,
+            'url' => $redirectUrl
         );
 
         $this->setResponse($this->getClient()->makeRequest($apiMethod, $params));
-        return $this->data['link'];
+        return $this->response['data']['link'];
     }
 
 }

@@ -75,7 +75,6 @@ class UserManager extends Response
         );
 
         $this->setResponse($this->getClient()->makeRequest($apiMethod, $params));
-        var_dump($this->response);
         return $this->getSuccess();
     }
 
